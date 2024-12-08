@@ -1,7 +1,7 @@
 import java.io.File
 import kotlin.math.abs
 
-class Solution(inputPath: String) {
+class Day1(inputPath: String) {
     private val left: List<Int>
     private val right: List<Int>
     init {
@@ -37,9 +37,9 @@ class Solution(inputPath: String) {
 }
 
 fun main() {
-    val solution = Solution("resources/day_1_input.txt")
-    val answerPartOne = solution.computePartOne()
+    val day1 = Day1("resources/day_1_input.txt")
+    val answerPartOne = day1.computePartOne()
     println("Part one: $answerPartOne")
-    val answerPartTwo = solution.computePartTwo()
+    val answerPartTwo = day1.computePartTwo()
     println("Part two: $answerPartTwo")
 }
