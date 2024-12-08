@@ -30,16 +30,12 @@ class Day3(inputPath: String) {
             .sum()
     }
 
-    private fun evaluateInstruction(instruction: String): Int {
-        return Regex("\\d+").findAll(instruction).fold(1) { acc, result -> acc * result.value.toInt() }
-    }
-
+    private fun evaluateInstruction(instruction: String) =
+        Regex("\\d+").findAll(instruction).fold(1) { acc, result -> acc * result.value.toInt() }
 }
 
 fun main() {
     val day3 = Day3("resources/day_3_input.txt")
-    val answerPartOne = day3.computePartOne()
-    println("Part one: $answerPartOne")
-    val answerPartTwo = day3.computePartTwo()
-    println("Part two: $answerPartTwo")
+    println("Part one: ${day3.computePartOne()}")
+    println("Part two: ${day3.computePartTwo()}")
 }
