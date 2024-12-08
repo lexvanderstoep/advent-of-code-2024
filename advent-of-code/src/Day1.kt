@@ -22,11 +22,11 @@ class Solution(inputPath: String) {
         return left.sumOf { it * occurrenceCount.getOrDefault(it, 0) }
     }
 
-    fun parseInput(input: String): Pair<List<Int>, List<Int>> {
-        val input = File(input).readText()
+    private fun parseInput(inputPath: String): Pair<List<Int>, List<Int>> {
+        val input = File(inputPath).readText()
         val inputLines = input.split("\n")
-        var leftList = mutableListOf<Int>()
-        var rightList = mutableListOf<Int>()
+        val leftList = mutableListOf<Int>()
+        val rightList = mutableListOf<Int>()
         inputLines.forEach {
             val (first, second) = it.split("   ").map { it.toInt() }
             leftList.add(first)
