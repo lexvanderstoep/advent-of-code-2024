@@ -19,33 +19,22 @@ class Day7(inputPath: String) {
         }
 
     private fun isSolved(equation: Pair<Long, List<Int>>, operators: List<Operator>): Boolean {
-        val solution = equation.first
-        val operands = equation.second
+        val (solution, operands) = equation
 
         val value = operands
             .drop(1)
             .zip(operators)
-            .fold(operands.first().toLong()) { acc, (operand, operator) ->
-                when (operator) {
-                    Operator.ADD -> acc + operand
-                    Operator.MULTIPLY -> acc * operand
-                    Operator.CONCATENATION -> (acc.toString() + operand.toString()).toLong()
-                }
-            }
+            .fold(operands.first().toLong()) { acc, (operand, operator) -> operator.apply(acc, operand) }
         return solution == value
     }
 
-    private fun generateOperatorCombinations(numberOfOperands: Int, operators: List<Operator>): List<List<Operator>> {
-        if (numberOfOperands == 2) {
-            return operators.map { listOf(it) }
-        }
-        val operatorsCombinations = mutableListOf<List<Operator>>()
-        for (operator in operators) {
-            val subCombinations = generateOperatorCombinations(numberOfOperands - 1, operators)
-            operatorsCombinations.addAll(subCombinations.map { listOf(operator) + it })
-        }
-        return operatorsCombinations
-    }
+    private fun generateOperatorCombinations(numberOfOperands: Int, operators: List<Operator>): List<List<Operator>> =
+        if (numberOfOperands == 2) operators.map { listOf(it) }
+        else
+            operators.flatMap { operator ->
+                generateOperatorCombinations(numberOfOperands - 1, operators)
+                    .map { listOf(operator) + it }
+            }
 
     private fun parseInput(inputPath: String) = File(inputPath)
         .readLines()
@@ -60,10 +49,13 @@ class Day7(inputPath: String) {
         }
 
     private enum class Operator {
-        ADD,
-        MULTIPLY,
-        CONCATENATION,
-        ;
+        ADD, MULTIPLY, CONCATENATION;
+
+        fun apply(a: Long, b: Int) = when (this) {
+            ADD -> a + b
+            MULTIPLY -> a * b
+            CONCATENATION -> "$a$b".toLong()
+        }
     }
 }
 
