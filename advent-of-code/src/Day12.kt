@@ -20,8 +20,7 @@ class Day12(inputPath: String) {
         return regions
     }
 
-    private fun computePerimeter(region: Set<Plot>) =
-        region.sumOf { plot -> 4 - getAdjacentPlots(plot, region).count { region.contains(it) } }
+    private fun computePerimeter(region: Set<Plot>) = region.sumOf { plot -> 4 - getAdjacentPlots(plot, region).size }
 
     private fun computeSides(region: Set<Plot>) = region.sumOf { computeConvexity(it, region) } +
             garden.filter { !region.contains(it) }.sumOf { computeConcavity(it, region) }
